@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuli la Cocinera - Tu Asistente Gastronómica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chat-container { height: calc(100vh - 150px); }
+        .message-yuli { background-color: #f0fdf4; border-left: 4px solid #22c55e; }
+        .message-user { background-color: #f1f5f9; border-left: 4px solid #64748b; }
+    </style>
+</head>
+<body class="bg-orange-50 font-sans antialiased">
+    <div class="max-w-2xl mx-auto p-4">
+        <header class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-orange-600">👩‍🍳 Yuli la Cocinera</h1>
+            <p class="text-gray-600">"¡Hola! Soy Yuli, lista para ayudarte en la cocina."</p>
+        </header>
+
+        <div id="chat-box" class="chat-container overflow-y-auto bg-white rounded-2xl shadow-inner p-4 mb-4 border border-orange-100">
+            <div class="message-yuli p-3 rounded-lg mb-3">
+                ¡Hola, cariño! ¿Qué vamos a preparar hoy? Puedo ayudarte con recetas, consejos o dudas culinarias.
+            </div>
+        </div>
+
+        <form id="chat-form" class="flex gap-2">
+            <input type="text" id="user-input" class="flex-1 p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400" placeholder="Pregúntale algo a Yuli..." required>
+            <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded-xl font-semibold hover:bg-orange-600 transition">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+
+        function addMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = `${sender === 'yuli' ? 'message-yuli' : 'message-user'} p-3 rounded-lg mb-3`;
+            div.textContent = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = userInput.value;
+            addMessage(text, 'user');
+            userInput.value = '';
+
+            // Simulando una respuesta de Yuli
+            setTimeout(() => {
+                const responses = [
+                    "¡Qué delicia suena eso! Te recomiendo usar un toque de hierbas frescas para ese platillo.",
+                    "La clave está en el sofrito, ¡no lo apresures!",
+                    "¡Uy! Ese es uno de mis favoritos. ¿Quieres que te pase mi truco especial?",
+                    "Recuerda siempre probar mientras cocinas. La sazón es personal.",
+                    "Cocinar es un acto de amor. ¡Hazlo con calma y alegría!"
+                ];
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                addMessage(randomResponse, 'yuli');
+            }, 800);
+        });
+    </script>
+</body>
+</html>
